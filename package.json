@@ -1,0 +1,25 @@
+{
+  "name": "playwright-ai-saucedemo-framework",
+  "version": "1.0.0",
+  "description": "AI-powered Playwright test automation framework for SauceDemo (UI + API + intelligent test insights)",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramyasree1505/playwright-ai-saucedemo-framework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramyasree1505/playwright-ai-saucedemo-framework/issues"
+  },
+  "homepage": "https://github.com/ramyasree1505/playwright-ai-saucedemo-framework#readme",
+  "dependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}
