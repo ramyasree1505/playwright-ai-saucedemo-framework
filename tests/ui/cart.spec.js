@@ -1,4 +1,4 @@
-const { test, expect } = require('../../fixtures/auth');
+const { test, expect } = require('../../fixtures/login');
 const InventoryPage = require('../../pages/InventoryPage');
 const { products } = require('../../testData/productsData');
 
