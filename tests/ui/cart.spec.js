@@ -1,57 +1,32 @@
-const { test, expect } = require('../../fixtures/roles.fixture');
+const { test, expect } = require('../../fixtures/auth');
 const InventoryPage = require('../../pages/InventoryPage');
+const { products } = require('../../testData/productsData');
 
 test.describe('Cart Feature', () => {
 
-  let inventoryPage;
+  test('@regression | Add item to cart', async ({ loggedInPage }) => {
 
-  test.beforeEach(async ({ authPage }) => {
-    inventoryPage = new InventoryPage(authPage);
+    const inventoryPage = new InventoryPage(loggedInPage);
+
+    await inventoryPage.addItemToCart(products.backpack);
+
+    const count = await inventoryPage.getCartBadgeCount();
+    expect(Number(count)).toBe(1);
   });
 
-  test('@user | Add item to cart', async ({ testData, roleCheck }, testInfo) => {
+  test('@regression | Add and Remove item from cart', async ({ loggedInPage }) => {
 
-    await testInfo.attach('log', {
-      body: 'Starting test: Add item to cart',
-      contentType: 'text/plain'
-    });
+    const inventoryPage = new InventoryPage(loggedInPage);
 
-    await test.step('Add item to cart', async () => {
-      await inventoryPage.addItemToCart(testData.product);
-    });
+    await inventoryPage.addItemToCart(products.backpack);
 
-    await test.step('Validate cart count is 1', async () => {
-      const count = await inventoryPage.getCartBadgeCount();
-      expect(count).toBe(1);
-    });
+    let count = await inventoryPage.getCartBadgeCount();
+    expect(Number(count)).toBe(1);
 
-  });
+    await inventoryPage.removeItemFromCart(products.backpack);
 
-  test('@admin | Add and Remove item from cart', async ({ testData, roleCheck }, testInfo) => {
-
-    await testInfo.attach('log', {
-      body: 'Starting test: Add and Remove item',
-      contentType: 'text/plain'
-    });
-
-    await test.step('Add item to cart', async () => {
-      await inventoryPage.addItemToCart(testData.product);
-    });
-
-    await test.step('Validate cart count is 1', async () => {
-      const count = await inventoryPage.getCartBadgeCount();
-      expect(count).toBe(1);
-    });
-
-    await test.step('Remove item from cart', async () => {
-      await inventoryPage.removeItemFromCart(testData.product);
-    });
-
-    await test.step('Validate cart is empty', async () => {
-      const updatedCount = await inventoryPage.getCartBadgeCount();
-      expect(updatedCount).toBe(0);
-    });
-
+    const updatedCount = await inventoryPage.getCartBadgeCount();
+    expect(Number(updatedCount)).toBe(0);
   });
 
 });
