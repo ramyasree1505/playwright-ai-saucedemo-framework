@@ -1,9 +1,10 @@
-const { expect } = require('@playwright/test');
+import { cartBadge, cartLink } from '../locators/inventoryPage.locators';
 
 class InventoryPage {
   constructor(page) {
     this.page = page;
-    this.cartBadge = page.locator('.shopping_cart_badge');
+    this.cartBadge = page.locator(cartBadge);
+    this.cartLink = page.locator(cartLink);
   }
 
   formatProductName(productName) {
@@ -34,6 +35,10 @@ class InventoryPage {
     if (await this.cartBadge.count() === 0) return 0;
     return Number(await this.cartBadge.textContent());
   }
+
+  async goToCart() {
+    await this.cartLink.click();
+  }
 }
 
-module.exports = InventoryPage;
+export default InventoryPage;
