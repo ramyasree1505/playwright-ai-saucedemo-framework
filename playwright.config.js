@@ -1,9 +1,17 @@
 const { defineConfig, devices } = require('@playwright/test');
+const env = require('./config/env');
 
 module.exports = defineConfig({
   testDir: './tests',
 
+  timeout: env.timeout,
+
+  expect: {
+    timeout: 5000
+  },
+
   fullyParallel: true,
+
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
 
@@ -13,8 +21,10 @@ module.exports = defineConfig({
     ['json', { outputFile: 'test-results/results.json' }]
   ],
 
+  outputDir: 'test-results/',
+
   use: {
-    baseURL: require('./config/env').baseURL,
+    baseURL: env.baseURL,
     headless: true,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
@@ -22,25 +32,10 @@ module.exports = defineConfig({
   },
 
   projects: [
-     {
-      name: 'setup',
-      testMatch: /.*authsetup\.spec\.js/,
-      use: {
-        storageState: undefined
-      }
-    },
     {
-      name: 'user',
+      name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'storage/standard.json'
-      }
-    },
-    {
-      name: 'admin',
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'storage/admin.json'
+        ...devices['Desktop Chrome']
       }
     }
   ]
