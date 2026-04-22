@@ -34,13 +34,22 @@ test.describe('@smoke Login Feature', () => {
     test('Login with invalid username and password', async ({ loginPage }) => {
 
         await loginPage.login(users.invalid.username,users.invalid.password);
-        await expect(await loginPage.getErrorLocator()).toContainText('Epic sadface: Username and password do not match any user in this service');
+        await expect(loginPage.getErrorLocator()).toContainText('Epic sadface: Username and password do not match any user in this service');
     });
 
     // Negative - valid username + wrong password
     test('Login with valid username and wrong password', async ({ loginPage }) => {
 
         await loginPage.login(users.standard.username,users.invalid.password);
-        await expect(await loginPage.getErrorLocator()).toContainText('Epic sadface: Username and password do not match any user in this service');
+        await expect(loginPage.getErrorLocator()).toContainText('Epic sadface: Username and password do not match any user in this service');
     });
+
+    // Negative - no username + no password
+    test('Login with no username and no password', async ({ loginPage }) => {
+
+        await loginPage.login('', '');
+        await expect(loginPage.getErrorLocator()).toBeVisible();
+        await expect(loginPage.getErrorLocator()).toContainText('Epic sadface: Username is required');
+    });
+
 });

@@ -10,6 +10,11 @@ exports.users = {
   invalid: {
     username: 'invalid_user',
     password: 'wrong_pass'
+  },
+  checkoutUser: {
+    firstName: 'John',
+    lastName: 'Doe',
+    zip: '12345'
   }
 };
 

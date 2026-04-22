@@ -6,8 +6,8 @@ class CartPage {
 
     // Initialize locators using the cartLocators object
     this.cartItems = page.locator(cartLocators.cartItems);
-    this.itemNames = page.locator(cartLocators.itemNames);
-    this.itemPrices = page.locator(cartLocators.itemPrices);
+    this.itemNames = page.locator(cartLocators.itemNamesInCart);
+    this.summaryItemPrices = page.locator(cartLocators.summaryItemPrices);
     this.itemQuantities = page.locator(cartLocators.itemQuantities);
     this.removeButtons = page.locator(cartLocators.removeButtons);
     this.continueShoppingButton = page.locator(cartLocators.continueShoppingButton);
@@ -26,9 +26,9 @@ class CartPage {
     return await this.itemNames.allTextContents();
   }
 
-  async getItemPrices() {
-    const prices = await this.itemPrices.allTextContents();
-    return prices.map(price => parseFloat(price.replace('$', '')));
+  async getItemTotalPrice() {
+    const price = await this.summaryItemPrices.textContent();
+    return parseFloat(price.replace('Item total: $', ''));
   }
 
   async getItemQuantities() {
@@ -53,10 +53,14 @@ class CartPage {
     await this.checkoutButton.click();
   }
 
-  async getTotalPrice() {
-    const prices = await this.getItemPrices();
-    return prices.reduce((sum, price) => sum + price, 0);
+  async fillCheckoutDetails({ firstName, lastName, zip }) {
+    
+    // Implementation for filling checkout details
+    await this.page.getByPlaceholder(cartLocators.firstNameInput).fill(firstName);
+    await this.page.getByPlaceholder(cartLocators.lastNameInput).fill(lastName);
+    await this.page.getByPlaceholder(cartLocators.zipInput).fill(zip);
   }
+
 }
 
 module.exports = CartPage;

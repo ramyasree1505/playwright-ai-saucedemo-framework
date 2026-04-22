@@ -16,8 +16,8 @@ class LoginPage {
     await this.page.click(loginLocators.loginBtn);
   }
   
- async getErrorLocator() {
-  return this.page.locator(loginLocators.errorMsg);
+  getErrorLocator() {
+    return this.page.locator(loginLocators.errorMsg);
 }
 
 }
