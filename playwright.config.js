@@ -28,7 +28,10 @@ module.exports = defineConfig({
     headless: true,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
-    video: 'retain-on-failure'
+    video: 'retain-on-failure',
+    // Grant permissions for geolocation.
+    permissions: ['geolocation'], 
+    ignoreHTTPSErrors: true
   },
 
   projects: [
