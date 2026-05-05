@@ -6,6 +6,7 @@ const checkout  = require('../../locators/checkoutPage.locators.js');
 const cartThings = require('../../locators/cartPage.locators.js');
 const { products } = require('../../testData/productsData');
 
+
 // Test suite for login functionality.
 test('@e2e | User completes checkout with multiple items', async ({ loggedInPage, page }) => {
     const inventoryPage = new InventoryPage(loggedInPage);
